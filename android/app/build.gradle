@@ -30,8 +30,8 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+       sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
@@ -52,6 +52,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+multiDexEnabled true
     }
 
     buildTypes {
@@ -69,4 +70,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+implementation 'com.facebook.android:facebook-login:latest.release'
+implementation 'com.android.support:multidex:1.0.3'
+
 }

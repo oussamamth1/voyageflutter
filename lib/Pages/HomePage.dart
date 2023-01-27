@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 77, 16, 199),
+        backgroundColor:Color.fromARGB(255, 45, 7, 236),
         title: Text(titleString[currentState]),
         centerTitle: true,
         actions: <Widget>[
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 70, 7, 196),
+        backgroundColor: Color.fromARGB(255, 45, 8, 228),
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => AddBlog()));
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 52, 3, 116),
+        color: Color.fromARGB(255, 45, 7, 236),
         shape: CircularNotchedRectangle(),
         notchMargin: 12,
         child: Container(
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.home),
-                  color: currentState == 0 ? Colors.white : Colors.white54,
+                  color: currentState == 0 ? Colors.white : Color.fromARGB(137, 19, 1, 1),
                   onPressed: () {
                     setState(() {
                       currentState = 0;
@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 IconButton(
                   icon: Icon(Icons.person),
-                  color: currentState == 1 ? Colors.white : Colors.white54,
+                  color: currentState == 1 ? Colors.white : Color.fromARGB(137, 18, 0, 0),
                   onPressed: () {
                     setState(() {
                       currentState = 1;

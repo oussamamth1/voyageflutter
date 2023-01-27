@@ -6,6 +6,7 @@ import 'SignUpPage.dart';
 import 'package:http/http.dart' as http;
 
 import 'SinInPage.dart';
+import 'login_signup.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -71,7 +72,7 @@ class _WelcomePageState extends State<WelcomePage>
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.white, Color.fromARGB(255, 13, 9, 232)],
+            colors: [Colors.white, Color.fromARGB(255, 201, 204, 212)],
             begin: const FractionalOffset(0.0, 1.0),
             end: const FractionalOffset(0.0, 1.0),
             stops: [0.0, 1.0],
@@ -85,7 +86,7 @@ class _WelcomePageState extends State<WelcomePage>
               SlideTransition(
                 position: animation1,
                 child: Text(
-                  "DevStack",
+                  "Voyage",
                   style: TextStyle(
                     fontSize: 38,
                     fontWeight: FontWeight.w600,
@@ -94,7 +95,7 @@ class _WelcomePageState extends State<WelcomePage>
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 6,
+                height: MediaQuery.of(context).size.height / 10,
               ),
               SlideTransition(
                 position: animation1,
@@ -120,14 +121,14 @@ class _WelcomePageState extends State<WelcomePage>
               SizedBox(
                 height: 20,
               ),
-              boxContainer(
-                "assets/email2.png",
-                "Sign up with Email",
-                onEmailClick,
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              // boxContainer(
+              //   "assets/email2.png",
+              //   "Sign up with Email",
+              //   onEmailClick,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
               SlideTransition(
                 position: animation2,
                 child: Row(
@@ -136,7 +137,7 @@ class _WelcomePageState extends State<WelcomePage>
                     Text(
                       "Already have an account?",
                       style: TextStyle(
-                        color: Colors.grey,
+                        color: Color.fromARGB(255, 6, 0, 0),
                         fontSize: 17,
                       ),
                     ),
@@ -146,13 +147,13 @@ class _WelcomePageState extends State<WelcomePage>
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignInPage(),
+                          builder: (context) => LoginView(),
                         ));
                       },
                       child: Text(
                         "Sign In",
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Color.fromARGB(255, 38, 23, 202),
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
                         ),
@@ -173,8 +174,11 @@ class _WelcomePageState extends State<WelcomePage>
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken;
+// final profile = await facebookLogin.getUserProfile();
+//         print('Hello, ${profile.name}! You ID: ${profile.userId}');
+        print(token);
         final response = await http.get(Uri.parse(
-            "https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token"));
+            "https://graph.facebook.com/v15.0/me?fields=name,picture,email&access_token=$token"));
         final data1 = json.decode(response.body);
         print(data);
         setState(() {

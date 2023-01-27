@@ -97,7 +97,7 @@ class _AddBlogState extends State<AddBlog> {
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
+              color: Color.fromARGB(255, 171, 4, 4),
               width: 2,
             ),
           ),
@@ -105,7 +105,7 @@ class _AddBlogState extends State<AddBlog> {
           prefixIcon: IconButton(
             icon: Icon(
               iconphoto,
-              color: Colors.teal,
+              color: Color.fromARGB(255, 2, 21, 231),
             ),
             onPressed: takeCoverPhoto,
           ),
@@ -137,7 +137,7 @@ class _AddBlogState extends State<AddBlog> {
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.orange,
+              color: Color.fromARGB(255, 198, 4, 4),
               width: 2,
             ),
           ),
@@ -178,10 +178,10 @@ class _AddBlogState extends State<AddBlog> {
           height: 50,
           width: 200,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Colors.teal),
+              borderRadius: BorderRadius.circular(10), color: Color.fromARGB(255, 22, 8, 222)),
           child: Center(
               child: Text(
-            "Add Blog",
+            "Add Post",
             style: TextStyle(
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           )),
