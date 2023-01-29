@@ -1,9 +1,15 @@
 // import 'dart:html';
 
+import 'dart:convert';
+
+import 'package:voyage/Profile/CreatProfile.dart';
+
 import '../Blog/Blogs.dart';
+import '../Model/ProfilMo.dart';
 import '../Model/profileModel.dart';
 import '../NetworkHandler.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class MainProfile extends StatefulWidget {
   MainProfile({Key key}) : super(key: key);
@@ -16,6 +22,8 @@ class _MainProfileState extends State<MainProfile> {
   bool circular = true;
   NetworkHandler networkHandler = NetworkHandler();
   ProfileModel profileModel = ProfileModel();
+
+  // List<ProfileModel> total = [];
   @override
   void initState() {
     super.initState();
@@ -24,12 +32,23 @@ class _MainProfileState extends State<MainProfile> {
   }
 
   void fetchData() async {
-    var response = await networkHandler.get("/profile/getData");
+    var response = await networkHandler.get("/api/v1/profile");
     setState(() {
+      // print(body["data"][0]);
+      // print(response.body);
+      // final Iterable v = response["id"];
+// total = (list.map((m)=>profileModel.form)
+      // final parsed = JsonCodec.withReviver(response)as Map;
+      // print("$parsed hhhhhhhhfdfffkkkkkkkkkkkkkkkkkkkkkkkkkk");
       profileModel = ProfileModel.fromJson(response["data"]);
       circular = false;
     });
   }
+  // ignore: missing_return
+  // Future<List<ProfileM>> fetchData() async {
+  // var response = await http.get(Uri.parse("/api/v1/profile" as String));
+  //   return null;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +65,12 @@ class _MainProfileState extends State<MainProfile> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () {Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CreatProfile(),
+                                  ));
+                                  },
             color: Colors.black,
           ),
         ],
@@ -69,9 +93,9 @@ class _MainProfileState extends State<MainProfile> {
                 SizedBox(
                   height: 20,
                 ),
-                Blogs(
-                  url: "/blogpost/getOwnBlog",
-                ),
+                // Blogs(
+                //   url: "/blogpost/getOwnBlog",
+                // ),
               ],
             ),
     );
@@ -86,19 +110,15 @@ class _MainProfileState extends State<MainProfile> {
           Center(
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkHandler().getImage(profileModel.username),
-
+              backgroundImage: NetworkHandler().getImage(profileModel.name),
             ),
-
           ),
-
           Text(
-            profileModel.username,
-
+            profileModel.name,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(
-            profileModel.username,
+            profileModel.name,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(

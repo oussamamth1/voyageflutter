@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-// import 'package:ems/controller/auth_controller.dart';
-// import 'package:ems/views/profile/add_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

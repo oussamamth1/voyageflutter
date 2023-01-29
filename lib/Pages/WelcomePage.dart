@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_facebook_auth_platform_interface/flutter_facebook_auth_platform_interface.dart';
+import '../NetworkHandler.dart';
 import 'SignUpPage.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,12 +24,17 @@ class _WelcomePageState extends State<WelcomePage>
   Animation<Offset> animation2;
   bool _isLogin = false;
   Map data;
+  Map<String, dynamic> _userData;
+  AccessToken _accessToken;
+  NetworkHandler networkHandler = NetworkHandler();
+  bool checklogin = true;
   final facebookLogin = FacebookLogin();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // checkislogin();
 
     //animation 1
     _controller1 = AnimationController(
@@ -121,14 +129,15 @@ class _WelcomePageState extends State<WelcomePage>
               SizedBox(
                 height: 20,
               ),
-              // boxContainer(
-              //   "assets/email2.png",
-              //   "Sign up with Email",
-              //   onEmailClick,
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
+              boxContainer(
+                "assets/email2.png",
+                "Sign up with Email",
+                // onEmailClick,
+                logout,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               SlideTransition(
                 position: animation2,
                 child: Row(
@@ -170,33 +179,42 @@ class _WelcomePageState extends State<WelcomePage>
   }
 
   onFBLogin() async {
-    final result = await facebookLogin.logIn(['email']);
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        final token = result.accessToken;
+    // final result = await facebookLogin.logIn(['email']);
+    // final accestoken = await FacebookAuth.instance.accessToken;
+    // print(accestoken);
+    // switch (result.status) {
+    //   case FacebookLoginStatus.loggedIn:
+    //     final token = result.accessToken;
 // final profile = await facebookLogin.getUserProfile();
 //         print('Hello, ${profile.name}! You ID: ${profile.userId}');
-        print(token);
-        final response = await http.get(Uri.parse(
-            "https://graph.facebook.com/v15.0/me?fields=name,picture,email&access_token=$token"));
-        final data1 = json.decode(response.body);
-        print(data);
-        setState(() {
-          _isLogin = true;
-          data = data1;
-        });
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        setState(() {
-          _isLogin = false;
-        });
-        break;
-      case FacebookLoginStatus.error:
-        setState(() {
-          _isLogin = false;
-        });
-        break;
-    }
+    //     print(token);
+    //     final response = await http.get(Uri.parse(
+    //         "https://graph.facebook.com/v15.0/me?fields=name,picture,email&access_token=$token"));
+    //     final data1 = json.decode(response.body);
+    //     print(data);
+    //     setState(() {
+    //       _isLogin = true;
+    //       data = data1;
+    //     });
+    //     break;
+    //   case FacebookLoginStatus.cancelledByUser:
+    //     setState(() {
+    //       _isLogin = false;
+    //     });
+    //     break;
+    //   case FacebookLoginStatus.error:
+    //     setState(() {
+    //       _isLogin = false;
+    //     });
+    //     break;
+    // }
+    // if (accestoken == null) {
+    //   setState(() {
+    //     print("login");
+    //     login();
+    //   });
+    // }
+    checkislogin();
   }
 
   onEmailClick() {
@@ -235,5 +253,82 @@ class _WelcomePageState extends State<WelcomePage>
         ),
       ),
     );
+  }
+
+  void logout() async {
+    await FacebookAuth.instance.logOut();
+    _userData = null;
+    _accessToken = null;
+    setState(() {});
+  }
+
+  void login() async {
+    // final LoginResult result = await FacebookAuth.instance.login();
+    // final LoginResult result1 = await FacebookAuth.instance.expressLogin();
+    // loginBehavior is only supported for Android devices, for ios it will be ignored
+    final result = await FacebookAuth.instance.login(permissions: [
+      'email',
+      // 'public_profile',
+      // 'user_birthday',
+      // 'user_friends',
+      // 'user_gender',
+      // 'user_link'
+    ], loginBehavior: LoginBehavior.dialogOnly
+//.DIALOG_ONLY, // (only android) show an authentication dialog instead of redirecting to facebook app
+        );
+// _accessToken
+    // setState(() {});
+    if (result.status == LoginStatus.success) {
+      _accessToken = result.accessToken;
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData as Map<String, dynamic>;
+      Map<String, String> data = {
+        "username": _userData["name"],
+        "email": _userData["name"],
+        "password": _userData["name"],
+      };
+      print(data);
+      var responseRegister = await networkHandler.post("/api/v1/users/r", data);
+
+      //Login Logic added here
+      print(_userData["name"]);
+    } else {
+      // print(result.status);
+      // print(result.message);
+      // print(_userData["userId"]);
+      // print(_userData["email"]);
+      setState(() {
+        checklogin = false;
+      });
+    }
+  }
+
+  void checkislogin() async {
+    final accestoken = await FacebookAuth.instance.accessToken;
+    // final accestoken = await FacebookAuth.expressLogin()
+
+    setState(() {
+      checklogin = false;
+    });
+    if (accestoken != null) {
+      print("is Logged:::: ");
+      print(accestoken.toJson());
+      final userData = await FacebookAuth.instance.getUserData();
+      print(userData["userId"]);
+      print(userData["email"]);
+      // String fields;
+      String fields;
+      // final userData1 = await FacebookAuth.instance.getUserData(fields: fields);
+      // _accessToken = accestoken;
+      // print("aaaaaaaaaaaa $userData1");
+
+      // print(accestoken.toJson()["grantedPermissions"][2].value);
+      setState(() {
+        _userData = userData;
+        print("$_userData userdataaaaaaaa  ");
+      });
+    } else {
+      login();
+    }
   }
 }

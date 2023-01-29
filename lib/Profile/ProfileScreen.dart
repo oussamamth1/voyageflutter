@@ -1,7 +1,7 @@
 import '../NetworkHandler.dart';
 import '../Profile/CreatProfile.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'MainProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -28,8 +28,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //     builder: (context) {
     //       return Center(child: CircularProgressIndicator());
     //     });
-    var response = await networkHandler.get("/profile/checkProfile");
-    if (response["status"] == true) {
+    var response = await networkHandler.get("/api/v1/profile/");
+    print(response["data"]);
+    if (
+// response.statusCode == 200
+        response ["data"]['id']!= null) {
       setState(() {
         page = MainProfile();
         // Navigator.of(context).pop();

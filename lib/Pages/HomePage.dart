@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   final storage = FlutterSecureStorage();
   NetworkHandler networkHandler = NetworkHandler();
   String username = "";
+  String img = "";
   Widget profilePhoto = Container(
     height: 100,
     width: 100,
@@ -45,16 +46,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   void checkProfile() async {
-    var response = await networkHandler.get("/api/v1/users/");
+// var userid=await net
+    var response = await networkHandler.get("/api/v1/profile/");
     setState(() {
-      username = response['username'];
+      print(response["data"]);
+      img = response["data"]['imag'];
+      username = response["data"]["name"];
+      print(username);
       log.i(username, "the response of username");
     });
-    if (response["status"] == true) {
+    if (response["data"] != null) {
       setState(() {
         profilePhoto = CircleAvatar(
           radius: 20,
-          backgroundImage: NetworkHandler().getImage(username),
+          // backgroundImage: NetworkHandler().getImage(img),
           backgroundColor: Color.fromARGB(199, 145, 50, 72),
           // foregroundImage: NetworkHandler().getImage(username),
         );
@@ -126,7 +131,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor:Color.fromARGB(255, 45, 7, 236),
+        backgroundColor: Color.fromARGB(255, 45, 7, 236),
         title: Text(titleString[currentState]),
         centerTitle: true,
         actions: <Widget>[
@@ -158,7 +163,9 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.home),
-                  color: currentState == 0 ? Colors.white : Color.fromARGB(137, 19, 1, 1),
+                  color: currentState == 0
+                      ? Colors.white
+                      : Color.fromARGB(137, 19, 1, 1),
                   onPressed: () {
                     setState(() {
                       currentState = 0;
@@ -168,7 +175,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 IconButton(
                   icon: Icon(Icons.person),
-                  color: currentState == 1 ? Colors.white : Color.fromARGB(137, 18, 0, 0),
+                  color: currentState == 1
+                      ? Colors.white
+                      : Color.fromARGB(137, 18, 0, 0),
                   onPressed: () {
                     setState(() {
                       currentState = 1;

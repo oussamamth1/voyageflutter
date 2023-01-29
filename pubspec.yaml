@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_facebook_auth: ^5.0.7
   flutter_facebook_login: ^3.0.0
 dependency_overrides:
   platform: ^3.1.0
@@ -36,7 +37,8 @@ dependency_overrides:
   timeago:
   flutter_facebook_login: ^3.0.0
   flutter_secure_storage: ^3.3.3
-  image_picker: ^0.6.7+4
+  # image_picker: ^0.6.7+4
+  image_picker: ^0.8.6+1
   json_annotation:
   flutter_svg:
   get:

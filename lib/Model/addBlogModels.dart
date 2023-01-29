@@ -8,7 +8,7 @@ class AddBlogModel {
   int count;
   int share;
   int comment;
-  @JsonKey(name: "_id")
+  @JsonKey(name: "id")
   String id;
   String username;
   String title;
