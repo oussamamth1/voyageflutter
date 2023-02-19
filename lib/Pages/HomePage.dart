@@ -3,6 +3,8 @@
 
 // import 'dart:html';
 
+import 'package:flutter/cupertino.dart';
+
 import '../Blog/addBlog.dart';
 import '../Pages/WelcomePage.dart';
 import '../Profile/ProfileScreen.dart';
@@ -12,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../NetworkHandler.dart';
 import 'package:logger/logger.dart';
+
+import '../Screen/SettingsPage1.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -60,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         profilePhoto = CircleAvatar(
           radius: 20,
           // backgroundImage: NetworkHandler().getImage(img),
-          backgroundColor: Color.fromARGB(199, 145, 50, 72),
+          backgroundColor: Color.fromARGB(197, 225, 216, 225),
           // foregroundImage: NetworkHandler().getImage(username),
         );
       });
@@ -103,12 +107,20 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text("New Story"),
               trailing: Icon(Icons.add),
-              onTap: () {},
+              onTap: () {
+                // Navigator.push(context,
+                //     CupertinoPageRoute(builder: (redContext) => HomePage()));
+              },
             ),
             ListTile(
               title: Text("Settings"),
               trailing: Icon(Icons.settings),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage1()),
+                );
+              },
             ),
             ListTile(
               title: Text("Feedback"),
@@ -131,7 +143,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 45, 7, 236),
+        backgroundColor: Color.fromARGB(255, 139, 3, 188),
         title: Text(titleString[currentState]),
         centerTitle: true,
         actions: <Widget>[
@@ -140,7 +152,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 45, 8, 228),
+        backgroundColor: Color.fromARGB(255, 139, 3, 188),
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => AddBlog()));
@@ -151,7 +163,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromARGB(255, 45, 7, 236),
+        color: Color.fromARGB(255, 101, 2, 106),
         shape: CircularNotchedRectangle(),
         notchMargin: 12,
         child: Container(

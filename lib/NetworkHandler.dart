@@ -95,9 +95,13 @@ class NetworkHandler {
     return baseurl + url;
   }
 
-  NetworkImage getImage(String imageName) {
-    String url = formater("/uploads//$imageName.jpg");
-    return NetworkImage(url);
+  NetworkImage getImage(String imageName)  {
+//  String token =  storage.read(key: "access_token") as String;
+    String url = formater(
+        "/api/v1/profile/img/Screenshot(121)02afd54e-be99-4099-9202-bc7decc96320.png");
+    return NetworkImage(url,
+      headers: {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJ0ZXN0MkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6InRlc3QyIiwiaWF0IjoxNjc2NjI0ODE1fQ.LnWOUdIvlcv-1DN6-6GlYh_sL5-sPycrArx-FOED7xg"},
+    );
   }
 
   NetworkImage getImage1(String imageName) {

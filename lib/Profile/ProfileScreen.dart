@@ -30,9 +30,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //     });
     var response = await networkHandler.get("/api/v1/profile/");
     print(response["data"]);
+    print(response["data"]['id']);
     if (
+
 // response.statusCode == 200
-        response ["data"]['id']!= null) {
+        response["data"]['id'] != null) {
       setState(() {
         page = MainProfile();
         // Navigator.of(context).pop();

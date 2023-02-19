@@ -65,12 +65,13 @@ class _MainProfileState extends State<MainProfile> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CreatProfile(),
-                                  ));
-                                  },
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreatProfile(),
+                  ));
+            },
             color: Colors.black,
           ),
         ],
@@ -84,6 +85,7 @@ class _MainProfileState extends State<MainProfile> {
                   thickness: 0.8,
                 ),
                 otherDetails("About", profileModel.about),
+                otherDetails("email", profileModel.email),
                 otherDetails("Name", profileModel.name),
                 otherDetails("Profession", profileModel.profession),
                 otherDetails("DOB", profileModel.DOB),
@@ -110,15 +112,15 @@ class _MainProfileState extends State<MainProfile> {
           Center(
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkHandler().getImage(profileModel.name),
+              backgroundImage: NetworkHandler().getImage(profileModel.img),
             ),
           ),
           Text(
-            profileModel.name,
+            "name : ${profileModel.name}",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(
-            profileModel.name,
+            profileModel.email,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(
